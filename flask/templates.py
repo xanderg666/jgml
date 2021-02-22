@@ -10,9 +10,9 @@ def hello_world(): # requiere una funcion
     return render_template('index.html')
 
 
-@app.route('/usernombre/<nn>')
+@app.route('/user/<nn>')
 def usernn(nn='Invitado'):
-    return render_template('user.html',nombre1=nn)
+    return render_template('user.html',nombre = nn)
 
 
 # @app.route('/user/<name>') #la varable name usa para poder capturar desde la barra
