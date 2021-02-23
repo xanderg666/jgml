@@ -12,7 +12,7 @@ def index():
 @app.route('/client') #recibe un decorador con un string, la ruta es base
 def client():
     list_name = ['Test1', 'Test2', 'Test3']
-    return render_template('client.html',list + list_name)
+    return render_template('client.html',list = list_name)
 
 
 if __name__ == '__main__':
