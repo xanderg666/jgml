@@ -3,5 +3,6 @@
 {%block titile%} {{title}} {%endblock%}
 
 {%block content%}
-    <h2>Hola css fijos</h2>
+{% from "_macro.html" import show_list_h %}
+{{show_list_h(title)}}
 {%endblock%}
