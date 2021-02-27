@@ -5,3 +5,8 @@
 <h4>{{valor}}</h4>
 <h5>{{valor}}</h5>
 {%endmacro%}
+
+{% macro render_field(campo)%}
+<td> {{campo.label}}
+<dd> {{campo(**kwargs)|safe}}
+{%endmacro%}

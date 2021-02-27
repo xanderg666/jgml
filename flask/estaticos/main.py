@@ -1,13 +1,23 @@
 from flask import Flask
 from flask import render_template
+from flask import request
+
+#se agrega el campo del py creado
+import forms
 
 app = Flask(__name__,static_folder='templates/static')#nuevo objeto con name
 
 
-@app.route('/') #recibe un decorador con un string, la ruta es base
+@app.route('/',methods=['POST','GET']) #recibe un decorador con un string, la ruta es base
 def index():
     title = 'Curso Flask'
-    return render_template('index.html',title=title)
+    comment_form = forms.CommentForm(request.form)#Commentform es la clase creada en el archivo forms,
+    if request.method == 'POST':
+        print(comment_form.username.data)
+        print(comment_form.email.data)
+        print(comment_form.comment.data)
+
+    return render_template('index.html',title=title, form = comment_form)
 
 
 
