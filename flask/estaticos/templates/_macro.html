@@ -9,4 +9,14 @@
 {% macro render_field(campo)%}
 <td> {{campo.label}}
 <dd> {{campo(**kwargs)|safe}}
+
+    {%if campo.errors%}
+    <ul>
+        {%for error in campo.errors%}
+        <li>{{error}}</li>
+        {%endfor%}
+    </ul>
+    {%endif%}
+
 {%endmacro%}
+

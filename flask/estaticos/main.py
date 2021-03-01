@@ -12,10 +12,12 @@ app = Flask(__name__,static_folder='templates/static')#nuevo objeto con name
 def index():
     title = 'Curso Flask'
     comment_form = forms.CommentForm(request.form)#Commentform es la clase creada en el archivo forms,
-    if request.method == 'POST':
+    if request.method == 'POST' and comment_form.validate():
         print(comment_form.username.data)
         print(comment_form.email.data)
         print(comment_form.comment.data)
+    else:
+        print('Error en el fomulario ')
 
     return render_template('index.html',title=title, form = comment_form)
 
