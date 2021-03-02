@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import make_response
 
 
 
@@ -15,6 +16,8 @@ csrf = CSRFProtect(app)
 
 @app.route('/',methods=['POST','GET']) #recibe un decorador con un string, la ruta es base
 def index():
+    custome_cookie = request.cookies.get('nombrecookie','indefinido')
+    print(custome_cookie)
     title = 'Curso Flask'
     comment_form = forms.CommentForm(request.form)#Commentform es la clase creada en el archivo forms,
     if request.method == 'POST' and comment_form.validate():
@@ -32,6 +35,12 @@ def login():
     login_form = forms.LoginForm()
 
     return render_template('login.html', form = login_form)
+
+@app.route('/cookie')
+def cookie():
+    response = make_response( render_template('cookie.html') )
+    response.set_cookie('nombrecookie', 'jorge')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True,port=8000) # debug y puerto
