@@ -1,8 +1,11 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask import render_template
 from flask import request
 from flask import make_response
 
+from flask import session
+
+from flask import redirect
 
 
 #se agrega el campo del py creado
@@ -16,8 +19,9 @@ csrf = CSRFProtect(app)
 
 @app.route('/',methods=['POST','GET']) #recibe un decorador con un string, la ruta es base
 def index():
-    custome_cookie = request.cookies.get('nombrecookie','indefinido')
-    print(custome_cookie)
+    if 'username' in session:
+        username = session['username']
+        print(username)
     title = 'Curso Flask'
     comment_form = forms.CommentForm(request.form)#Commentform es la clase creada en el archivo forms,
     if request.method == 'POST' and comment_form.validate():
@@ -32,9 +36,19 @@ def index():
 
 @app.route('/login',methods=['POST','GET'])
 def login():
-    login_form = forms.LoginForm()
+    login_form = forms.LoginForm(request.form)
+    if request.method == 'POST' and login_form.validate():
+        session['username'] = login_form.username.data
 
     return render_template('login.html', form = login_form)
+
+
+@app.route('/logout')
+def logout():
+    if 'username' in session:
+        session.pop('username')
+    return redirect(url_for('login'))#se regresa la ruta por medio de urlfor
+
 
 @app.route('/cookie')
 def cookie():
